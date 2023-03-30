@@ -13,6 +13,9 @@ const styles = {
 export default function About() {
     return (
         <div>
+            <header>
+                
+            </header>
             <div>
                 <img class="img-fluid mt-0" src={'image2.png'} alt="donating"></img>
                 <h2>Who we are.</h2>
