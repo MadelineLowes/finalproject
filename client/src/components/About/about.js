@@ -55,13 +55,24 @@ export default function About(props) {
           transition: { ease: "easeInOut" },
         },
       };
+    
+    // find all causes up to 0, 1, 2 indexes
+
 
     return (
         <div className="bodyDiv">
-            <div className =  "imgDiv">
+            <AnimatePresence>
+            <motion.div className =  "imgDiv"
+            initial = {{scale: 1.6, x: -100}}
+            animate = {{scale: 1, x: 0 }}
+            exit = {{scale: 1.6, x: -100}}
+            transition = {{ duration: 1, delay: 0.3 }}
+            
+            >
                 <img className = "i1" src={hero} alt="placeholder" />
                 <h3 className = "h1FYP">Find your partner.</h3>
-            </div>
+            </motion.div>
+            </AnimatePresence>
             <div className = "fypDiv">
             <AnimatePresence>
             <motion.div className = "fypGrid"

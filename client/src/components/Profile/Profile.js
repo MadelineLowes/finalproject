@@ -7,7 +7,9 @@ import charity6 from '../../assets/charity6.png';
 
 
 
-export default function AddCause() {
+export default function AddCause(props) {
+
+    props.setPage("profile");
 
     const containerVariants = {
         hidden: {

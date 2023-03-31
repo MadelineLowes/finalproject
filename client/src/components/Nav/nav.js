@@ -19,7 +19,8 @@ export default function Nav(props) {
 
 
     return (
-        <nav className="nav background" >
+        <AnimatePresence>
+        <motion.nav className="nav background">
             <div className="navDiv">
                 <h1 className="navH1">Partner for Good.</h1>
                 <div className="navLinks" >
@@ -30,6 +31,7 @@ export default function Nav(props) {
                 </div>
             </div>
 
-        </nav>
+        </motion.nav>
+        </AnimatePresence>
     )
 }

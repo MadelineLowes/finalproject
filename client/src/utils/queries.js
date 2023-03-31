@@ -1,29 +1,25 @@
 // from activity 21.20
 import { gql } from '@apollo/client';
 
-export const QUERY_THOUGHTS = gql`
-  query getThoughts {
-    thoughts {
+export const QUERY_PARTNERS = gql`
+query Causes {
+  causes {
+    _id
+    category {
       _id
-      thoughtText
-      thoughtAuthor
-      createdAt
+      name
     }
+    contactEmail
+    contactName
+    description
+    headquarters
+    name
+    userId
+    websiteLink
   }
+}
 `;
 
-export const QUERY_SINGLE_THOUGHT = gql`
-  query getSingleThought($thoughtId: ID!) {
-    thought(thoughtId: $thoughtId) {
-      _id
-      thoughtText
-      thoughtAuthor
-      createdAt
-      comments {
-        _id
-        commentText
-        createdAt
-      }
-    }
-  }
+export const QUERY_SINGLE_PARTNER = gql`
+  
 `;

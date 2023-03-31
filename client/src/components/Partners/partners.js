@@ -9,10 +9,13 @@ import charity5 from '../../assets/charity5.png';
 import charity6 from '../../assets/charity6.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { useState, useEffect } from 'react';
+import { useMutation, useQuery } from '@apollo/client';
 
 
 
-export default function Partners() {
+
+export default function Partners(props) {
 
     const containerVariants = {
         hidden: {
@@ -50,6 +53,10 @@ export default function Partners() {
         },
       };
 
+      const [filter, setFilter] = useState(false);
+
+      props.setPage("partners");
+
     return (
         <motion.div class="bodyContainer"
         variants={containerVariants}
@@ -65,8 +72,42 @@ export default function Partners() {
         animate={{ x: 0 }}
         exit={{  x: 400 }}
         whileTap={{ scale: 0.9 }}
-        transition={{ duration: 0.5, type: "spring", stiffness: 140, delay: 0.7 }}
+        onClick={() => {setFilter(!filter)}}
+        transition={{ duration: 0.5, type: "spring", stiffness: 140, delay: 2 }}
         >  &nbsp; Filter &nbsp; <FontAwesomeIcon icon={faCaretDown} />&nbsp;</motion.button>
+        
+        
+
+        </AnimatePresence>
+        </div>
+        <div class = "filterDiv2">
+        <AnimatePresence>
+        {filter && <motion.div className = "dropDown"
+        initial={{  y: -400, opacity: 0 }}
+        animate={{ y: 0, opacity: 1}}
+        exit={{  y: -400,  opacity: 0 }}
+        transition={{ duration: 0.1, type: "spring", stiffness: 120 }}
+        
+        >
+            <div className = "listRow">
+                <input className= "checkBox" type = "checkbox">
+                </input><span className = "filCat">Environment</span>
+            </div>
+            <div className = "listRow">
+            <input className= "checkBox" type = "checkbox"></input><span className = "filCat">Diversity, Equity, Inclusion</span>
+            </div>
+            <div className = "listRow">
+            <input className= "checkBox" type = "checkbox"></input><span className = "filCat">LGBTQ</span>
+            </div>
+            <div className = "listRow">
+                <input className= "checkBox" type = "checkbox"></input>
+                <span className = "filCat">Homelessness</span>
+            </div>
+            <div className = "listRow">
+                <input className= "checkBox" type = "checkbox"></input>
+                <span className = "filCat">Food Security</span>
+            </div>
+        </motion.div>}
         </AnimatePresence>
         </div>
         
