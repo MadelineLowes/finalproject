@@ -1,29 +1,46 @@
-// from activity 21.28
-const { createUser, login } = require('../controllers/users');
-const { createCause, getAllCauses  } = require('../controllers/causes');
+const { AuthenticationError } = require("apollo-server-express");
+const { User } = require("../models");
+const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    // <name>: <controller>
-    user:  async (parent, args, context) => {
-      // const user = await User.create(args);
-      // const token = signToken(user);
-      // return { token, user };
+    users: async () => {
+      return User.find();
     },
-    causes: getAllCauses,
-    categories:  async (parent, args, context) => {},
+
+    user: async (parent, { userId }) => {
+      return User.findOne({ _id: userId });
+    },
   },
+
   Mutation: {
-    createUser: createUser,
-    login: login,
-    createCause: createCause, 
-    editCause: async (parent, {
-      name, description,
-      address,
-      contactName, 
-      categoryId,
-      websiteLink }, context) => {},
-    deleteCause: async (parent, { causeId }, context) => {},
+    addUser: async (parent, { email, password }) => {
+      console.log("addUser mutation");
+      console.log(User);
+      const user = await User.create({ email, password });
+      const token = signToken(user);
+
+      return { token, user };
+    },
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
+
+      if (user) {
+        throw new AuthenticationError("No user with this email found!");
+      }
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError("Incorrect password!");
+      }
+
+      const token = signToken(user);
+      return { token, user };
+    },
+    removeUser: async (parent, { userId }) => {
+      return user.findOneAndDelete({ _id: userId });
+    },
   },
 };
 
