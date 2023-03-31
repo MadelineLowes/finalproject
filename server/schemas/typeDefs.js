@@ -35,12 +35,13 @@ const typeDefs = gql`
     users: [User]
     cause: Cause!
     causes: [Cause]
+    causesCat: [Cause]
     category: Category!
     categories: [Category]
   }
 
   type Mutation {
-    createUser(email: String!, password: String!): Auth
+    addUser(email: String!, password: String!): Auth
     login(email: String!, password: String!): Auth
 
     createCause(causeInput: CauseInput!): Cause!

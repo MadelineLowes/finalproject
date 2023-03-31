@@ -1,4 +1,4 @@
-const { UserModel } = require('../models');
+const { User } = require('../models');
 
 const createUsers = async () => { 
     const users = [
@@ -23,11 +23,11 @@ const createUsers = async () => {
             password: 'password'
         }
     ];
-    await UserModel.insertMany(users);
+    await User.insertMany(users);
 }
 
 const removeAllUsers = async () => {
-    await UserModel.remove({});
+    await User.remove({});
 }
 
 module.exports = { createUsers, removeAllUsers };

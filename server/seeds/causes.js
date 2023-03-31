@@ -1,4 +1,4 @@
-const { CauseModel } = require('../models');
+const { Cause } = require('../models');
 
 const createCauses = async () => { 
     const causes = [
@@ -53,11 +53,11 @@ const createCauses = async () => {
             websiteLink: 'https://foodsecurecanada.org/'
         }
     ];
-    await CauseModel.insertMany(causes);
+    await Cause.insertMany(causes);
 }
 
 const removeAllCauses = async () => {
-    await CauseModel.remove({});
+    await Cause.remove({});
 }
 
 module.exports = { createCauses, removeAllCauses };

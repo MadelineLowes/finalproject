@@ -1,28 +1,32 @@
 // // from activity 21.28
-// const { AuthenticationError } = require('apollo-server-express');
-// const { User, Cause, Category } = require('../models');
-// const { signToken } = require('../utils/auth');
+const { AuthenticationError } = require('apollo-server-express');
+const { User, Cause, Category } = require('../models');
+const { signToken } = require('../utils/auth');
 
-const { createUser, login } = require('../controllers/users');
-const { createCause, getAllCauses } = require('../controllers/causes');
+// const { getUsers, createUser, login } = require('../controllers/users');
+// const { createCause, getAllCauses } = require('../controllers/causes');
 
 const resolvers = {
   Query: {
-    // <name>: <controller>
     users: async () => {
-      return User.find();
+      return UserModel.find();
     },
     user: async (parent, { email }) => {
-      return User.findOne({ _id: userId });
+      return UserModel.findOne({ _id: userId });
     },
     causes: async () => {
-      return User.find();
+      const causes = await Cause.find({}).populate("category").populate("user").exec();
+      return causes;
     },
     cause: async (parent, { causeId }) => {
-      return User.findOne({ _id: causeId });
+      return Cause.findOne({ _id: causeId });
     },
-    // by adding context to our query, we can retrieve the logged in user without specifically searching for them - use to edit and delete their own cause page
+    // this is for the drop down menu (filter) in view all partners to view by category - likely not working rn
+    causesCat: async (parent, { category }) => {
+      return Cause.find({ category });
+    },
     me: async (parent, args, context) => {
+      // by adding context to our query, we can retrieve the logged in user without specifically searching for them - use to edit and delete their own cause page
       if (context.user) {
         // should i be looking for user._id or cause._id?
         return Cause.findOne({ _id: context.user._id });
@@ -30,24 +34,69 @@ const resolvers = {
       throw new AuthenticationError('You need to be logged in!');
     },
     categories: async () => {
-      return User.find();
+      return Category.find();
     },
     category: async (parent, { categoryId }) => {
-      return User.findOne({ _id: categoryId });
+      return Category.findOne({ _id: categoryId });
     }
   },
   Mutation: {
-    createUser: createUser,
-    login: login,
-    createCause: createCause,
+    addUser: async (parent, args) => {
+      const user = await User.create(args);
+      const token = signToken(user);
+      return { token, user }
+    },
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
 
-   
-  
+      if (!user) {
+        throw new AuthenticationError('No user found with this email');
+      }
+
+      const correctPw = await user.isCorrectPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
+
+      const token = signToken(user);
+
+      return { token, user };
+    },
+    createCause: async (parent, args, context) => {
+      if (context.user) { // only logged in users
+        const newCause = await Cause.create({
+          name: args.causeInput.name,
+          description: args.causeInput.description,
+          headquarters: args.causeInput.headquarters,
+          contactName: args.causeInput.contactName,
+          // contact email linked is the one who creates the cause
+          contactEmail: context.user.email,
+          // contactEmail: args.causeInput.contactEmail,
+          websiteLink: args.causeInput.websiteLink,
+          category: args.causeInput.categoryId,
+          // user linked is the one who creates the cause
+          user: context.user._id,
+        },
+        {
+          
+        }
+        );
+        // DO WE NEED TO UPDATE USER?
+        // await User.findOneAndUpdate(
+        //     { _id: context.user._id },
+        //     { $addToSet: { causes: cause._id } },
+        //   )
+        return newCause;
+      } else {
+        throw new AuthenticationError('You are not authenticated');
+      }
+    },
     editCause: async (parent, args, context) => {
       if (context.cause) {
         return await Cause.findOneAndUpdate(
           { _id: context.cause._id },
-          { $push: args },
+          { $set: args },
           { new: true, runValidators: true }
         );
       }
@@ -56,24 +105,6 @@ const resolvers = {
 
 
 
-    updateUser: async (parent, args, context) => {
-      if (context.user) {
-        return await User.findByIdAndUpdate(context.user._id, args, { new: true });
-      }
-
-      throw new AuthenticationError('Not logged in');
-    },
-
-
-
-
-    createCause: createCause,
-    editCause: async (parent, {
-      name, description,
-      address,
-      contactName,
-      categoryId,
-      websiteLink }, context) => { },
     deleteCause: async (parent, { causeId }, context) => { },
   },
 };

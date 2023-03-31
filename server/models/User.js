@@ -28,6 +28,6 @@ userSchema.methods.isCorrectPassword = async function (password) {
     return bcrypt.compare(password, this.password);
 };
 
-const UserModel = mongoose.model('user', userSchema);
+const User = mongoose.model('user', userSchema);
 
-module.exports = UserModel
+module.exports = User

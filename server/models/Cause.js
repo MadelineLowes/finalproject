@@ -42,6 +42,6 @@ const causeSchema = mongoose.Schema({
 
 });
 
-const CauseModel = mongoose.model("cause", causeSchema);
+const Cause = mongoose.model("cause", causeSchema);
 
-module.exports = CauseModel;
+module.exports = Cause;
