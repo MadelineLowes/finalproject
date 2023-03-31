@@ -32,7 +32,10 @@ const typeDefs = gql`
 
   type Query {
     user: User!
+    users: [User]
+    cause: Cause!
     causes: [Cause]
+    category: Category!
     categories: [Category]
   }
 

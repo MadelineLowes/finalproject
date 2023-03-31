@@ -1,3 +1,4 @@
+const { AuthenticationError } = require('apollo-server-express');
 const { UserModel, CategoryModel, CauseModel } = require('../models');
 const { signToken } = require('../utils/auth');
 
@@ -11,7 +12,7 @@ const login = async (parent, { email, password }) => {
     const user = await UserModel.findOne({ email });
 
     if (!user) {
-      throw new AuthenticationError('No user found');
+      throw new AuthenticationError('No user found with this email');
     }
 
     const correctPw = await user.isCorrectPassword(password);

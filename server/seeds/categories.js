@@ -1,6 +1,5 @@
 const { CategoryModel } = require('../models');
 
-
 const createCategories = async () => { 
     const categories = [
         { name: 'Environment'},
