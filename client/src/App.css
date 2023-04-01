@@ -7,7 +7,6 @@
   pointer-events: none;
 }
 
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -21,4 +20,56 @@
 
 .App-link {
   color: #61dafb;
+}
+
+:root {
+  --bg-dk-green: #0d504c;
+  --bg-lt-green: #237a74;
+  --bg-txt-green: #477c88;
+  --bg-lt-blue: #86b0bd;
+}
+
+body {
+  overflow: hidden;
+}
+
+.Auth-form-container {
+  background-color: var(--bg-dk-green);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.Auth-form {
+  width: 420px;
+  box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+  padding-top: 30px;
+  padding-bottom: 20px;
+  border-radius: 8px;
+  background-color: var(--bg-lt-blue);
+}
+
+.Auth-form-content {
+  padding-left: 12%;
+  padding-right: 12%;
+}
+
+.Auth-form-title {
+  text-align: center;
+  margin-bottom: 1em;
+  font-size: 24px;
+  color: var(--bg-dk-green);
+  font-weight: 800;
+}
+
+label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--bg-dk-green);
+}
+
+.link-primary {
+  cursor: pointer;
 }
