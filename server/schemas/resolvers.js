@@ -15,7 +15,8 @@ const resolvers = {
       return causes;
     },
     cause: async (parent, { causeId }) => {
-      return Cause.findOne({ _id: causeId }).populate("category").exec();
+      const cause = await Cause.findOne({ _id: causeId }).populate("category").exec();
+      return cause
     },
     // this is for the drop down menu (filter) in view all partners to view by category - likely not working rn
     causesCat: async (parent, { categoryId }) => {

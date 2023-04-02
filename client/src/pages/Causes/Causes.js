@@ -18,6 +18,14 @@ export default function Causes() {
     // const [causes1, setCauses] = useState([]);
     const [filter, setFilter] = useState(false);
     const { loading, data } = useQuery(QUERY_CAUSES);
+    const [selectCategory, setSelectCategory] = useState(null);
+    const [filteredCauses, setFilteredCauses] = useState([]);
+
+    const handleChange = (e) => {
+        setSelectCategory(e.target.value);
+        const filteredCauses = data.causes.filter(cause => cause.category.name === e.target.value);
+        setFilteredCauses(filteredCauses);
+    };
 
     const causes = data?.causes || [];
 
@@ -57,6 +65,11 @@ export default function Causes() {
         },
     };
 
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
     return (
         <motion.div className="bodyContainer"
             variants={containerVariants}
@@ -90,21 +103,22 @@ export default function Causes() {
 
                     >
                         <div className="listRow">
-                            <input className="checkBox" type="checkbox">
+                            <input className="checkBox" type="checkbox" value="Environment" onChange={handleChange}>
                             </input><span className="filCat">Environment</span>
                         </div>
                         <div className="listRow">
-                            <input className="checkBox" type="checkbox"></input><span className="filCat">Diversity, Equity, Inclusion</span>
+                            <input className="checkBox" type="checkbox" value="Diversity, Equity, Inclusion"
+                                onChange={handleChange}></input><span className="filCat" >Diversity, Equity, Inclusion</span>
                         </div>
                         <div className="listRow">
-                            <input className="checkBox" type="checkbox"></input><span className="filCat">LGBTQ</span>
+                            <input className="checkBox" type="checkbox" value="LGBTQ" onChange={handleChange}></input><span className="filCat">LGBTQ</span>
                         </div>
                         <div className="listRow">
-                            <input className="checkBox" type="checkbox"></input>
+                            <input className="checkBox" type="checkbox" value="Homelessness" onChange={handleChange}></input>
                             <span className="filCat">Homelessness</span>
                         </div>
                         <div className="listRow">
-                            <input className="checkBox" type="checkbox"></input>
+                            <input className="checkBox" type="checkbox" value="Food Security" onChange={handleChange}></input>
                             <span className="filCat">Food Security</span>
                         </div>
                     </motion.div>}
@@ -120,7 +134,15 @@ export default function Causes() {
                 >
                     {/* {loading ? (
                         <div>Loading...</div>): */}
-                        {(causes.map(cause => (
+                    {selectCategory ? filteredCauses.map(cause => (
+                        <CauseCard
+                            key={cause._id}
+                            name={cause.name}
+                            causeId={cause._id}
+                            description={cause.description}
+                        />
+                    )) :
+                        (causes.map(cause => (
                             <CauseCard
                                 key={cause._id}
                                 name={cause.name}
