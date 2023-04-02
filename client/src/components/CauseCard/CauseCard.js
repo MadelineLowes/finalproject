@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 // import './Causes.css';
 import { motion, AnimatePresence } from 'framer-motion';
 // import charity1 from '../../assets/charity1.png';
+import c6 from '../../assets/charity6.png';
 
 
 
@@ -51,7 +52,7 @@ const cardVariants = {
       whileHover={{ y: -10 }}
     >
       <div className="partnerCard">
-        <img className="imgCard" alt={causeId} />
+        <img className="imgCard" alt={causeId} src={c6}/>
       </div>
       <div className="descriptionBox">
         <p className="partnerP">

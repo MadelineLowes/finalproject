@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import './Causes.css';
 import { motion, AnimatePresence } from 'framer-motion';
-import charity1 from '../../assets/charity1.png';
+import { useQuery } from '@apollo/client';
+import { QUERY_CAUSES } from '../../utils/queries';
+// import charity1 from '../../assets/charity1.png';
 // import charity2 from '../../assets/charity2.png';
 // import charity3 from '../../assets/charity3.png';
 // import charity4 from '../../assets/charity4.png';
@@ -10,14 +11,15 @@ import charity1 from '../../assets/charity1.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import CauseCard from '../../components/CauseCard/CauseCard';
-
+import './Causes.css';
 
 
 export default function Causes() {
-    const [causes, setCauses] = useState([]);
-
+    // const [causes1, setCauses] = useState([]);
     const [filter, setFilter] = useState(false);
-    
+    const { loading, data } = useQuery(QUERY_CAUSES);
+
+    const causes = data?.causes || [];
 
     const containerVariants = {
         hidden: {
@@ -63,51 +65,51 @@ export default function Causes() {
             exit="exit"
         >
 
-<div className = "filterDiv">
-        <AnimatePresence>
-        <motion.button className="filter"
-        initial={{  x: 400 }}
-        animate={{ x: 0 }}
-        exit={{  x: 400 }}
-        whileTap={{ scale: 0.9 }}
-        onClick={() => {setFilter(!filter)}}
-        transition={{ duration: 0.5, type: "spring", stiffness: 140, delay: 2 }}
-        >  &nbsp; Filter &nbsp; <FontAwesomeIcon icon={faCaretDown} />&nbsp;</motion.button>
-        
-        
+            <div className="filterDiv">
+                <AnimatePresence>
+                    <motion.button className="filter"
+                        initial={{ x: 400 }}
+                        animate={{ x: 0 }}
+                        exit={{ x: 400 }}
+                        whileTap={{ scale: 0.9 }}
+                        onClick={() => { setFilter(!filter) }}
+                        transition={{ duration: 0.5, type: "spring", stiffness: 140, delay: 2 }}
+                    >  &nbsp; Filter &nbsp; <FontAwesomeIcon icon={faCaretDown} />&nbsp;</motion.button>
 
-        </AnimatePresence>
-        </div>
-        <div className = "filterDiv2">
-        <AnimatePresence>
-        {filter && <motion.div className = "dropDown"
-        initial={{  y: -400, opacity: 0 }}
-        animate={{ y: 0, opacity: 1}}
-        exit={{  y: -400,  opacity: 0 }}
-        transition={{ duration: 0.1, type: "spring", stiffness: 120 }}
-        
-        >
-            <div className = "listRow">
-                <input className= "checkBox" type = "checkbox">
-                </input><span className = "filCat">Environment</span>
+
+
+                </AnimatePresence>
             </div>
-            <div className = "listRow">
-            <input className= "checkBox" type = "checkbox"></input><span className = "filCat">Diversity, Equity, Inclusion</span>
+            <div className="filterDiv2">
+                <AnimatePresence>
+                    {filter && <motion.div className="dropDown"
+                        initial={{ y: -400, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        exit={{ y: -400, opacity: 0 }}
+                        transition={{ duration: 0.1, type: "spring", stiffness: 120 }}
+
+                    >
+                        <div className="listRow">
+                            <input className="checkBox" type="checkbox">
+                            </input><span className="filCat">Environment</span>
+                        </div>
+                        <div className="listRow">
+                            <input className="checkBox" type="checkbox"></input><span className="filCat">Diversity, Equity, Inclusion</span>
+                        </div>
+                        <div className="listRow">
+                            <input className="checkBox" type="checkbox"></input><span className="filCat">LGBTQ</span>
+                        </div>
+                        <div className="listRow">
+                            <input className="checkBox" type="checkbox"></input>
+                            <span className="filCat">Homelessness</span>
+                        </div>
+                        <div className="listRow">
+                            <input className="checkBox" type="checkbox"></input>
+                            <span className="filCat">Food Security</span>
+                        </div>
+                    </motion.div>}
+                </AnimatePresence>
             </div>
-            <div className = "listRow">
-            <input className= "checkBox" type = "checkbox"></input><span className = "filCat">LGBTQ</span>
-            </div>
-            <div className = "listRow">
-                <input className= "checkBox" type = "checkbox"></input>
-                <span className = "filCat">Homelessness</span>
-            </div>
-            <div className = "listRow">
-                <input className= "checkBox" type = "checkbox"></input>
-                <span className = "filCat">Food Security</span>
-            </div>
-        </motion.div>}
-        </AnimatePresence>
-        </div>
 
             <AnimatePresence>
                 <motion.div className="partnerContainer"
@@ -116,14 +118,16 @@ export default function Causes() {
                     animate="visible"
                     exit="exit"
                 >
-                    {causes.map(cause => (
-                        <CauseCard
-                            key={cause._id}
-                            name={cause.name}
-                            causeId={cause._id} 
-                            description={cause.description}
-                        />
-                    ))}
+                    {/* {loading ? (
+                        <div>Loading...</div>): */}
+                        {(causes.map(cause => (
+                            <CauseCard
+                                key={cause._id}
+                                name={cause.name}
+                                causeId={cause._id}
+                                description={cause.description}
+                            />
+                        )))}
                 </motion.div>
             </AnimatePresence>
         </motion.div>
