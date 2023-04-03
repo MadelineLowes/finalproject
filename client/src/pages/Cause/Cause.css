@@ -95,18 +95,41 @@
 }
 
 .dataList {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr, 1fr, 1fr, 1fr, 1fr, 1fr;
     flex-direction: column;
     justify-content: center;
-    align-items: flex-start;
     height: 100%;
     width: 100%;
     padding: 1rem;
     list-style-type: none;
     font-size: 1.2rem;
     font-weight: bold;
+}
+
+.columnOne {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: left;
+    text-align: left;
+
+    width: 100%;
 
 }
+/* .columnTwo {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: left;
+    text-align: left;
+
+    width: 50%;
+} */
+
+
+
 
 .h2Name {
     margin-bottom: 2.5rem;
@@ -142,4 +165,33 @@
     width: 100%;
     font-size: 0.66rem;
     margin-bottom: 0.2rem;
+}
+
+.textData {
+    color: rgb(153, 151, 151);
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-left: 1rem;
+    width: 70%;
+
+}
+.textheaders {
+    width: 30%;
+}
+
+.causeSiteLink:hover {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 400;
+}
+
+.boldedText {
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.underlinedH2 {
+    color:rgb(153, 151, 151)
+
 }

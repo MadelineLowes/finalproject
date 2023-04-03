@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useQuery } from '@apollo/client';
 import { QUERY_CAUSES } from '../../utils/queries';
-// import charity1 from '../../assets/charity1.png';
-// import charity2 from '../../assets/charity2.png';
-// import charity3 from '../../assets/charity3.png';
-// import charity4 from '../../assets/charity4.png';
-// import charity5 from '../../assets/charity5.png';
-// import charity6 from '../../assets/charity6.png';
+// import c0 from '../../assets/c0.png';
+// import c1 from '../../assets/c1.png';
+// import c2 from '../../assets/c2.png';
+// import c3 from '../../assets/c3.png';
+// import c4 from '../../assets/c4.png';
+// import c5 from '../../assets/c5.png';
+// import placeholder from '../../assets/placeholder.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import CauseCard from '../../components/CauseCard/CauseCard';
@@ -15,19 +16,29 @@ import './Causes.css';
 
 
 export default function Causes() {
-    // const [causes1, setCauses] = useState([]);
+
     const [filter, setFilter] = useState(false);
     const { loading, data } = useQuery(QUERY_CAUSES);
     const [selectCategory, setSelectCategory] = useState(null);
     const [filteredCauses, setFilteredCauses] = useState([]);
 
+
+    
+
     const handleChange = (e) => {
+        if (e.target.value === 'All') {
+            setSelectCategory(null);
+            setFilteredCauses(data.causes);
+        }
+        else {
         setSelectCategory(e.target.value);
         const filteredCauses = data.causes.filter(cause => cause.category.name === e.target.value);
         setFilteredCauses(filteredCauses);
+        }
     };
 
     const causes = data?.causes || [];
+
 
     const containerVariants = {
         hidden: {
@@ -70,6 +81,8 @@ export default function Causes() {
         return <div>Loading...</div>;
     }
 
+    
+
     return (
         <motion.div className="bodyContainer"
             variants={containerVariants}
@@ -103,23 +116,27 @@ export default function Causes() {
 
                     >
                         <div className="listRow">
-                            <input className="checkBox" type="checkbox" value="Environment" onChange={handleChange}>
+                            <input className="checkBox" type="radio" name="cat-radio" value="Environment" onChange={handleChange}>
                             </input><span className="filCat">Environment</span>
                         </div>
                         <div className="listRow">
-                            <input className="checkBox" type="checkbox" value="Diversity, Equity, Inclusion"
+                            <input className="checkBox" type="radio" name="cat-radio" value="Diversity, Equity, Inclusion"
                                 onChange={handleChange}></input><span className="filCat" >Diversity, Equity, Inclusion</span>
                         </div>
                         <div className="listRow">
-                            <input className="checkBox" type="checkbox" value="LGBTQ" onChange={handleChange}></input><span className="filCat">LGBTQ</span>
+                            <input className="checkBox" type="radio" name="cat-radio" value="LGBTQ" onChange={handleChange}></input><span className="filCat">LGBTQ</span>
                         </div>
                         <div className="listRow">
-                            <input className="checkBox" type="checkbox" value="Homelessness" onChange={handleChange}></input>
+                            <input className="checkBox" type="radio" name="cat-radio" value="Homelessness" onChange={handleChange}></input>
                             <span className="filCat">Homelessness</span>
                         </div>
                         <div className="listRow">
-                            <input className="checkBox" type="checkbox" value="Food Security" onChange={handleChange}></input>
+                            <input className="checkBox" type="radio" name="cat-radio" value="Food Security" onChange={handleChange}></input>
                             <span className="filCat">Food Security</span>
+                        </div>
+                        <div className="listRow">
+                            <input className="checkBox" type="radio" name="cat-radio" value="All" onChange={handleChange}></input>
+                            <span className="filCat">ALL</span>
                         </div>
                     </motion.div>}
                 </AnimatePresence>
@@ -134,20 +151,23 @@ export default function Causes() {
                 >
                     {/* {loading ? (
                         <div>Loading...</div>): */}
-                    {selectCategory ? filteredCauses.map(cause => (
+                    {selectCategory ? filteredCauses.map((cause,index) => (
                         <CauseCard
                             key={cause._id}
                             name={cause.name}
                             causeId={cause._id}
                             description={cause.description}
+                            imgpath={`c${index}`}
+
                         />
                     )) :
-                        (causes.map(cause => (
+                        (causes.map((cause,index) => (
                             <CauseCard
                                 key={cause._id}
                                 name={cause.name}
                                 causeId={cause._id}
                                 description={cause.description}
+                                imgpath={`c${index}`}
                             />
                         )))}
                 </motion.div>

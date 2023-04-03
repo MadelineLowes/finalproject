@@ -7,7 +7,7 @@ const createCategories = async () => {
         { name: 'Diversity, Equity, Inclusion'},
         { name: 'LGBTQ'},
         { name: 'Homelessness'},
-        { name: 'Food Security'},
+        { name: 'Food Security'}
     ];
     await Category.insertMany(categories);
 }

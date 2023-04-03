@@ -29,7 +29,7 @@ export default function Nav() {
     const isOnHome = location.pathname === '/';
 
     return (
-        <nav className="nav background" style={{ position: isOnHome ? 'absolute' : '' }} >
+        <nav className="nav background" style={{ position: isOnHome ? 'absolute' : '', backgroundColor: isOnHome ? '' : '#237A74' }} >
             <div className="navDiv">
                 <h1 className="navH1">Partner for Good.</h1>
                 <div className="navLinks" >

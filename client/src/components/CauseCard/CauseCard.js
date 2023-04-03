@@ -2,14 +2,40 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 // import './Causes.css';
 import { motion, AnimatePresence } from 'framer-motion';
-// import charity1 from '../../assets/charity1.png';
-import c6 from '../../assets/charity6.png';
+
+import c0 from '../../assets/c0.png';
+import c1 from '../../assets/c1.png';
+import c2 from '../../assets/c2.png';
+import c3 from '../../assets/c3.png';
+import c4 from '../../assets/c4.png';
+import c5 from '../../assets/c5.png';
+import placeholder from '../../assets/placeholder.png';
 
 
 
-const CauseCard = ({ name, causeId, description }) => {
+const CauseCard = ({ name, causeId, description, imgpath }) => {
 
   const navigate = useNavigate();
+  
+  let imgSrc = placeholder;
+    if (name=='Plant With Purpose') {
+        imgSrc = c0;
+      }
+    else if (name=='The Inclusion Project') {
+        imgSrc = c1;
+        }
+    else if (name=='The Canadian Alliance to End Homelessness') {
+        imgSrc = c3;
+        }
+    else if (name=='Food Secure Canada') {
+        imgSrc = c4;
+        }   
+    else if (name=='CAMH') {
+        imgSrc = c5;
+        }
+    else if (name=='Egale') {
+        imgSrc = c2;        
+    }
 
   const containerVariants = {
     hidden: {
@@ -52,7 +78,7 @@ const cardVariants = {
       whileHover={{ y: -10 }}
     >
       <div className="partnerCard">
-        <img className="imgCard" alt={causeId} src={c6}/>
+        <img className="imgCard" alt={causeId} src={imgSrc}/>
       </div>
       <div className="descriptionBox">
         <p className="partnerP">

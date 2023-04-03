@@ -87,7 +87,6 @@ const resolvers = {
     },
     editCause: async (parent, { causeInput }, context) => {
       if (context.user) {
-        console.log(causeInput);
         return await Cause.findByIdAndUpdate(
           causeInput.causeId, // when updating this field should be present
           {

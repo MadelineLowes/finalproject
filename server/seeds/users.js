@@ -21,6 +21,10 @@ const createUsers = async () => {
         { 
             email: 'frankie@test.com',
             password: 'password'
+        },
+        { 
+            email: 'jess@test.com',
+            password: 'password'
         }
     ];
     for (const user of users) {

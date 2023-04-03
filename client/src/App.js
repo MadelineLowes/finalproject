@@ -24,7 +24,7 @@ export default function App() {
                             <Route path='/login' element={<Login />} />
                             <Route path='/signup' element={<SignUp />} />
                             <Route path='/causes' element={<Causes />} />
-                            <Route path='/cause' element={<Cause />} />
+                            <Route path='/cause/:causeId' element={<Cause />} />
                             {/* <Route path='/addcause' element={<AddCause />} /> */}
                             {/* <Route path='/contact' element={<Contact />} /> */}
                         </Routes>

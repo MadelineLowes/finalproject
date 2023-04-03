@@ -75,7 +75,7 @@
 .fypGrid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
-    height:420px;
+    height:800px;
     background-color: var(--bg-dk-green);
     row-gap: 2rem;
     column-gap: 2rem;
@@ -217,6 +217,14 @@
     .descriptionBox1 {
         height:55%;
     }
+    .fypGrid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr 1fr;
+        padding: 1rem 4%;
+        height: 1500px;
+        row-gap: 1rem;
+        
+    }
 
 
 }
@@ -230,7 +238,7 @@
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 1fr 1fr;
         padding: 1rem 4%;
-        height: 1000px;
+        height: 2200px;
         row-gap: 1rem;
         
     }
@@ -285,7 +293,7 @@
         height: 163px;
     }
     .fypGrid {
-        height: 1100px;
+        height: 2200px;
     }
 
     .partnerCard1 {
